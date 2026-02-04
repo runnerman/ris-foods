@@ -22,7 +22,6 @@ const AIAssistant: React.FC = () => {
     }
   }, [messages]);
 
-  // ✅ CORRECTED PAYLOAD (prompt instead of message)
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
 
@@ -41,11 +40,12 @@ const AIAssistant: React.FC = () => {
         'https://ris-foods-backend.vercel.app/api/chat',
         {
           method: 'POST',
+          mode: 'cors',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            prompt: userMsg.content, // 🔥 FIX HERE
+            prompt: userMsg.content, // ✅ MATCHES BACKEND
             history: messages.map(m => ({
               role: m.role,
               content: m.content,
@@ -55,7 +55,7 @@ const AIAssistant: React.FC = () => {
       );
 
       if (!res.ok) {
-        throw new Error('Backend API failed');
+        throw new Error(`API error: ${res.status}`);
       }
 
       const data = await res.json();
@@ -69,7 +69,7 @@ const AIAssistant: React.FC = () => {
         },
       ]);
     } catch (error) {
-      console.error(error);
+      console.error('Chat error:', error);
       setMessages(prev => [
         ...prev,
         {
@@ -94,7 +94,7 @@ const AIAssistant: React.FC = () => {
       {/* Floating Button */}
       <button
         onClick={() => setIsOpen(true)}
-        className={`fixed bottom-8 right-8 z-[60] bg-emerald-800 text-white p-4 rounded-full shadow-2xl shadow-emerald-900/40 hover:scale-110 transition-transform flex items-center gap-3 ${isOpen ? 'hidden' : 'flex'
+        className={`fixed bottom-8 right-8 z-[60] bg-emerald-800 text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform flex items-center gap-3 ${isOpen ? 'hidden' : 'flex'
           }`}
       >
         <ICONS.Chef />
@@ -159,7 +159,7 @@ const AIAssistant: React.FC = () => {
 
             {isLoading && (
               <div className="flex justify-start">
-                <div className="bg-white p-4 rounded-2xl rounded-tl-none border border-amber-100 flex gap-1">
+                <div className="bg-white p-4 rounded-2xl border border-amber-100 flex gap-1">
                   <span className="w-1.5 h-1.5 bg-emerald-600 rounded-full animate-bounce" />
                   <span className="w-1.5 h-1.5 bg-emerald-600 rounded-full animate-bounce delay-75" />
                   <span className="w-1.5 h-1.5 bg-emerald-600 rounded-full animate-bounce delay-150" />
