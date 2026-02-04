@@ -22,7 +22,7 @@ const AIAssistant: React.FC = () => {
     }
   }, [messages]);
 
-  // 🔥 FIXED: Frontend now calls BACKEND API
+  // ✅ CORRECTED PAYLOAD (prompt instead of message)
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
 
@@ -45,7 +45,7 @@ const AIAssistant: React.FC = () => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            message: userMsg.content,
+            prompt: userMsg.content, // 🔥 FIX HERE
             history: messages.map(m => ({
               role: m.role,
               content: m.content,
