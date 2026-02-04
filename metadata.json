@@ -1,0 +1,8 @@
+{
+  "name": "RIS Foods",
+  "description": "Premium Kerala breakfast products company website featuring an AI-powered Malabar Chef for authentic recipes and meal planning.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
