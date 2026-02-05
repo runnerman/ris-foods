@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Navbar from './components/Navbar.tsx';
-import Hero from './components/Hero.tsx';
-import ProductList from './components/ProductList.tsx';
-import AIAssistant from './components/AIAssistant.tsx';
-import Footer from './components/Footer.tsx';
-import { AppSection } from './types.ts';
+import Navbar from './components/Navbar';
+import Hero from './components/Hero';
+import ProductList from './components/ProductList';
+import AIAssistant from './components/AIAssistant';
+import Footer from './components/Footer';
+import { AppSection } from './types';
 
 // --- Reusable Form Components ---
 
@@ -221,8 +221,12 @@ const ContactPage = () => {
 
   const canSubmit = Object.keys(errors).length === 0;
 
-  const BACKEND_URL =
+  // Use environment variables with fallback
+  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL ||
     "https://ris-foods-backend-itvnlc4hj-ashers-projects-abff786f.vercel.app";
+
+  const FRONTEND_ORIGIN = process.env.REACT_APP_FRONTEND_URL ||
+    "https://ris-foods.vercel.app";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -246,7 +250,7 @@ const ContactPage = () => {
       }
 
       // Distributor Enquiry
-      if (activeTab === 1) {
+      else if (activeTab === 1) {
         endpoint = "/api/distributor-enquiry";
         payload = {
           name: distributor.name,
@@ -264,7 +268,7 @@ const ContactPage = () => {
       }
 
       // Customer Feedback
-      if (activeTab === 2) {
+      else if (activeTab === 2) {
         endpoint = "/api/customer-feedback";
         payload = {
           name: feedback.name,
@@ -275,25 +279,61 @@ const ContactPage = () => {
         };
       }
 
+      console.log("Submitting to:", `${BACKEND_URL}${endpoint}`);
+      console.log("Payload:", payload);
+
       const res = await fetch(`${BACKEND_URL}${endpoint}`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "Origin": FRONTEND_ORIGIN
+        },
         body: JSON.stringify(payload),
       });
 
+      console.log("Response status:", res.status);
+
+      const data = await res.json();
+      console.log("Response data:", data);
+
       if (!res.ok) {
-        throw new Error("Failed to submit form");
+        throw new Error(data.error || `Server error: ${res.status}`);
       }
 
       setIsSuccess(true);
       setTouched({});
-    } catch (err) {
-      alert("Something went wrong. Please try again.");
+
+      // Reset form after successful submission
+      if (activeTab === 0) {
+        setGeneral({ name: '', email: '', mobile: '', message: '' });
+      } else if (activeTab === 1) {
+        setDistributor({
+          name: '', firmName: '', address: '', telephone: '', mobile: '', email: '',
+          type: 'Retailer', year: '', turnover: '', warehouse: '', comments: ''
+        });
+      } else if (activeTab === 2) {
+        setFeedback({ name: '', email: '', mobile: '', feedback: '', rating: 0 });
+      }
+
+    } catch (err: any) {
+      console.error("Submission error:", err);
+
+      // User-friendly error messages
+      if (err.message.includes("CORS") || err.message.includes("Origin")) {
+        alert("Connection error. Please check if the server allows requests from this website.");
+      } else if (err.message.includes("401") || err.message.includes("403")) {
+        alert("Authentication error. Please contact support.");
+      } else if (err.message.includes("404")) {
+        alert("Server endpoint not found. Please contact support.");
+      } else if (err.message.includes("Network")) {
+        alert("Network error. Please check your internet connection and try again.");
+      } else {
+        alert(err.message || "Something went wrong. Please try again.");
+      }
     } finally {
       setIsSubmitting(false);
     }
   };
-
 
   return (
     <div className="pt-32 pb-40 min-h-screen bg-stone-50 relative overflow-hidden">
@@ -358,44 +398,203 @@ const ContactPage = () => {
               </div>
               <h3 className="text-3xl font-serif font-bold text-stone-900 mb-4">Message Sent!</h3>
               <p className="text-stone-500 font-light max-w-sm mx-auto">Thank you for contacting RIS Foods. Our team will review your enquiry and get back to you shortly.</p>
-              <button onClick={() => setIsSuccess(false)} className="mt-12 text-emerald-700 font-bold uppercase text-[10px] tracking-widest hover:underline">Send another enquiry</button>
+              <button
+                onClick={() => setIsSuccess(false)}
+                className="mt-12 text-emerald-700 font-bold uppercase text-[10px] tracking-widest hover:underline"
+              >
+                Send another enquiry
+              </button>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-8">
               {activeTab === 0 && (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <FormField label="Full Name" required value={general.name} onChange={e => setGeneral({ ...general, name: e.target.value })} onBlur={() => markTouched('name')} error={touched.name ? errors.name : ''} placeholder="e.g. Rahul Nair" />
-                  <FormField label="Email Address" type="email" required value={general.email} onChange={e => setGeneral({ ...general, email: e.target.value })} onBlur={() => markTouched('email')} error={touched.email ? errors.email : ''} placeholder="name@example.com" />
-                  <FormField label="Mobile Number" type="tel" required className="md:col-span-2" value={general.mobile} onChange={e => setGeneral({ ...general, mobile: e.target.value })} onBlur={() => markTouched('mobile')} error={touched.mobile ? errors.mobile : ''} placeholder="10-digit number" />
-                  <FormField label="Comment / Message" as="textarea" rows={5} required className="md:col-span-2" value={general.message} onChange={e => setGeneral({ ...general, message: e.target.value })} onBlur={() => markTouched('message')} error={touched.message ? errors.message : ''} placeholder="How can we help you today?" />
+                  <FormField
+                    label="Full Name"
+                    required
+                    value={general.name}
+                    onChange={e => setGeneral({ ...general, name: e.target.value })}
+                    onBlur={() => markTouched('name')}
+                    error={touched.name ? errors.name : ''}
+                    placeholder="e.g. Rahul Nair"
+                  />
+                  <FormField
+                    label="Email Address"
+                    type="email"
+                    required
+                    value={general.email}
+                    onChange={e => setGeneral({ ...general, email: e.target.value })}
+                    onBlur={() => markTouched('email')}
+                    error={touched.email ? errors.email : ''}
+                    placeholder="name@example.com"
+                  />
+                  <FormField
+                    label="Mobile Number"
+                    type="tel"
+                    required
+                    className="md:col-span-2"
+                    value={general.mobile}
+                    onChange={e => setGeneral({ ...general, mobile: e.target.value })}
+                    onBlur={() => markTouched('mobile')}
+                    error={touched.mobile ? errors.mobile : ''}
+                    placeholder="10-digit number"
+                  />
+                  <FormField
+                    label="Comment / Message"
+                    as="textarea"
+                    rows={5}
+                    required
+                    className="md:col-span-2"
+                    value={general.message}
+                    onChange={e => setGeneral({ ...general, message: e.target.value })}
+                    onBlur={() => markTouched('message')}
+                    error={touched.message ? errors.message : ''}
+                    placeholder="How can we help you today?"
+                  />
                 </div>
               )}
               {activeTab === 1 && (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <FormField label="Full Name" required value={distributor.name} onChange={e => setDistributor({ ...distributor, name: e.target.value })} onBlur={() => markTouched('d_name')} error={touched.d_name ? errors.d_name : ''} />
-                  <FormField label="Firm / Company Name" required value={distributor.firmName} onChange={e => setDistributor({ ...distributor, firmName: e.target.value })} onBlur={() => markTouched('d_firm')} error={touched.d_firm ? errors.d_firm : ''} />
-                  <FormField label="Business Address" as="textarea" rows={2} required className="md:col-span-2" value={distributor.address} onChange={e => setDistributor({ ...distributor, address: e.target.value })} onBlur={() => markTouched('d_address')} error={touched.d_address ? errors.d_address : ''} />
-                  <FormField label="Telephone (Optional)" value={distributor.telephone} onChange={e => setDistributor({ ...distributor, telephone: e.target.value })} />
-                  <FormField label="Mobile Number" required value={distributor.mobile} onChange={e => setDistributor({ ...distributor, mobile: e.target.value })} onBlur={() => markTouched('d_mobile')} error={touched.d_mobile ? errors.d_mobile : ''} />
-                  <FormField label="Email Address" type="email" required value={distributor.email} onChange={e => setDistributor({ ...distributor, email: e.target.value })} onBlur={() => markTouched('d_email')} error={touched.d_email ? errors.d_email : ''} />
-                  <FormField label="Type of Firm" as="select" required value={distributor.type} onChange={e => setDistributor({ ...distributor, type: e.target.value })}>
+                  <FormField
+                    label="Full Name"
+                    required
+                    value={distributor.name}
+                    onChange={e => setDistributor({ ...distributor, name: e.target.value })}
+                    onBlur={() => markTouched('d_name')}
+                    error={touched.d_name ? errors.d_name : ''}
+                    placeholder="Your full name"
+                  />
+                  <FormField
+                    label="Firm / Company Name"
+                    required
+                    value={distributor.firmName}
+                    onChange={e => setDistributor({ ...distributor, firmName: e.target.value })}
+                    onBlur={() => markTouched('d_firm')}
+                    error={touched.d_firm ? errors.d_firm : ''}
+                    placeholder="Your company name"
+                  />
+                  <FormField
+                    label="Business Address"
+                    as="textarea"
+                    rows={2}
+                    required
+                    className="md:col-span-2"
+                    value={distributor.address}
+                    onChange={e => setDistributor({ ...distributor, address: e.target.value })}
+                    onBlur={() => markTouched('d_address')}
+                    error={touched.d_address ? errors.d_address : ''}
+                    placeholder="Complete business address"
+                  />
+                  <FormField
+                    label="Telephone (Optional)"
+                    value={distributor.telephone}
+                    onChange={e => setDistributor({ ...distributor, telephone: e.target.value })}
+                    placeholder="Landline number"
+                  />
+                  <FormField
+                    label="Mobile Number"
+                    required
+                    value={distributor.mobile}
+                    onChange={e => setDistributor({ ...distributor, mobile: e.target.value })}
+                    onBlur={() => markTouched('d_mobile')}
+                    error={touched.d_mobile ? errors.d_mobile : ''}
+                    placeholder="10-digit mobile number"
+                  />
+                  <FormField
+                    label="Email Address"
+                    type="email"
+                    required
+                    value={distributor.email}
+                    onChange={e => setDistributor({ ...distributor, email: e.target.value })}
+                    onBlur={() => markTouched('d_email')}
+                    error={touched.d_email ? errors.d_email : ''}
+                    placeholder="business@email.com"
+                  />
+                  <FormField
+                    label="Type of Firm"
+                    as="select"
+                    required
+                    value={distributor.type}
+                    onChange={e => setDistributor({ ...distributor, type: e.target.value })}
+                  >
                     <option>Retailer</option>
                     <option>Wholesaler</option>
                     <option>Distributor</option>
                     <option>Exporter</option>
                   </FormField>
-                  <FormField label="Year of Establishment" value={distributor.year} onChange={e => setDistributor({ ...distributor, year: e.target.value })} />
-                  <FormField label="Turnover (Last FY)" value={distributor.turnover} onChange={e => setDistributor({ ...distributor, turnover: e.target.value })} />
-                  <FormField label="Warehouse Area (Sq. Ft)" value={distributor.warehouse} onChange={e => setDistributor({ ...distributor, warehouse: e.target.value })} />
-                  <FormField label="Comments" as="textarea" rows={3} className="md:col-span-2" value={distributor.comments} onChange={e => setDistributor({ ...distributor, comments: e.target.value })} />
+                  <FormField
+                    label="Year of Establishment"
+                    value={distributor.year}
+                    onChange={e => setDistributor({ ...distributor, year: e.target.value })}
+                    placeholder="e.g. 2010"
+                  />
+                  <FormField
+                    label="Turnover (Last FY)"
+                    value={distributor.turnover}
+                    onChange={e => setDistributor({ ...distributor, turnover: e.target.value })}
+                    placeholder="Annual turnover in ₹"
+                  />
+                  <FormField
+                    label="Warehouse Area (Sq. Ft)"
+                    value={distributor.warehouse}
+                    onChange={e => setDistributor({ ...distributor, warehouse: e.target.value })}
+                    placeholder="e.g. 5000"
+                  />
+                  <FormField
+                    label="Comments"
+                    as="textarea"
+                    rows={3}
+                    className="md:col-span-2"
+                    value={distributor.comments}
+                    onChange={e => setDistributor({ ...distributor, comments: e.target.value })}
+                    placeholder="Additional information or requirements"
+                  />
                 </div>
               )}
               {activeTab === 2 && (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <FormField label="Name" required value={feedback.name} onChange={e => setFeedback({ ...feedback, name: e.target.value })} onBlur={() => markTouched('f_name')} error={touched.f_name ? errors.f_name : ''} />
-                  <FormField label="Email" type="email" required value={feedback.email} onChange={e => setFeedback({ ...feedback, email: e.target.value })} onBlur={() => markTouched('f_email')} error={touched.f_email ? errors.f_email : ''} />
-                  <FormField label="Mobile" type="tel" required className="md:col-span-2" value={feedback.mobile} onChange={e => setFeedback({ ...feedback, mobile: e.target.value })} onBlur={() => markTouched('f_mobile')} error={touched.f_mobile ? errors.f_mobile : ''} />
-                  <FormField label="Your Feedback" as="textarea" rows={6} required className="md:col-span-2" value={feedback.feedback} onChange={e => setFeedback({ ...feedback, feedback: e.target.value })} onBlur={() => markTouched('f_msg')} error={touched.f_msg ? errors.f_msg : ''} />
+                  <FormField
+                    label="Name"
+                    required
+                    value={feedback.name}
+                    onChange={e => setFeedback({ ...feedback, name: e.target.value })}
+                    onBlur={() => markTouched('f_name')}
+                    error={touched.f_name ? errors.f_name : ''}
+                    placeholder="Your name"
+                  />
+                  <FormField
+                    label="Email"
+                    type="email"
+                    required
+                    value={feedback.email}
+                    onChange={e => setFeedback({ ...feedback, email: e.target.value })}
+                    onBlur={() => markTouched('f_email')}
+                    error={touched.f_email ? errors.f_email : ''}
+                    placeholder="your@email.com"
+                  />
+                  <FormField
+                    label="Mobile"
+                    type="tel"
+                    required
+                    className="md:col-span-2"
+                    value={feedback.mobile}
+                    onChange={e => setFeedback({ ...feedback, mobile: e.target.value })}
+                    onBlur={() => markTouched('f_mobile')}
+                    error={touched.f_mobile ? errors.f_mobile : ''}
+                    placeholder="10-digit mobile number"
+                  />
+                  <FormField
+                    label="Your Feedback"
+                    as="textarea"
+                    rows={6}
+                    required
+                    className="md:col-span-2"
+                    value={feedback.feedback}
+                    onChange={e => setFeedback({ ...feedback, feedback: e.target.value })}
+                    onBlur={() => markTouched('f_msg')}
+                    error={touched.f_msg ? errors.f_msg : ''}
+                    placeholder="Share your experience with our products"
+                  />
                   <div className="md:col-span-2">
                     <StarRating rating={feedback.rating} setRating={(r) => setFeedback({ ...feedback, rating: r })} />
                     {touched.f_rate && errors.f_rate && <span className="text-[10px] text-red-500 font-bold mt-2 block">{errors.f_rate}</span>}
