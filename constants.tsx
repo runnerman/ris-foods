@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Product } from './types.ts';
+import { Product } from './types';
 import puttuPodiImg from './components/puttu-podi.jpg';
 import roastedRavaImg from './components/roasted-rava.jpg';
 import palappamImg from './components/palappam-mix.jpg';

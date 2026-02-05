@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { config } from './config';
 import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -221,12 +222,9 @@ const ContactPage = () => {
 
   const canSubmit = Object.keys(errors).length === 0;
 
-  // Use environment variables with fallback
-  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL ||
-    "https://ris-foods-backend-itvnlc4hj-ashers-projects-abff786f.vercel.app";
+  const BACKEND_URL = config.apiBaseUrl;
 
-  const FRONTEND_ORIGIN = process.env.REACT_APP_FRONTEND_URL ||
-    "https://ris-foods.vercel.app";
+  const FRONTEND_ORIGIN = window.location.origin;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

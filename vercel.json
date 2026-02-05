@@ -1,0 +1,8 @@
+{
+    "rewrites": [
+        {
+            "source": "/api/:match*",
+            "destination": "https://ris-foods-backend.vercel.app/api/:match*"
+        }
+    ]
+}

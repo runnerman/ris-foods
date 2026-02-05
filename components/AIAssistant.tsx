@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { config } from '../config';
 import { ICONS } from '../constants.tsx';
 import { ChatMessage } from '../types.ts';
 
@@ -37,7 +38,7 @@ const AIAssistant: React.FC = () => {
 
     try {
       const res = await fetch(
-        'https://ris-foods-backend.vercel.app/api/chat',
+        `${config.apiBaseUrl}/api/chat`,
         {
           method: 'POST',
           mode: 'cors',
@@ -137,8 +138,8 @@ const AIAssistant: React.FC = () => {
               >
                 <div
                   className={`max-w-[85%] p-4 rounded-2xl shadow-sm text-sm ${msg.role === 'user'
-                      ? 'bg-emerald-800 text-white rounded-tr-none'
-                      : 'bg-white text-stone-800 rounded-tl-none border border-amber-100'
+                    ? 'bg-emerald-800 text-white rounded-tr-none'
+                    : 'bg-white text-stone-800 rounded-tl-none border border-amber-100'
                     }`}
                 >
                   <div
