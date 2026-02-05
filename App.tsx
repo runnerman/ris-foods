@@ -221,81 +221,79 @@ const ContactPage = () => {
 
   const canSubmit = Object.keys(errors).length === 0;
 
+  const BACKEND_URL =
+    "https://ris-foods-backend-itvnlc4hj-ashers-projects-abff786f.vercel.app";
+
   const handleSubmit = async (e: React.FormEvent) => {
-    const BACKEND_URL =
-      "https://ris-foods-backend-itvnlc4hj-ashers-projects-abff786f.vercel.app";
+    e.preventDefault();
+    if (!canSubmit) return;
 
-    const handleSubmit = async (e: React.FormEvent) => {
-      e.preventDefault();
-      if (!canSubmit) return;
+    setIsSubmitting(true);
 
-      setIsSubmitting(true);
+    try {
+      let endpoint = "";
+      let payload: any = {};
 
-      try {
-        let endpoint = "";
-        let payload: any = {};
-
-        // General Enquiry
-        if (activeTab === 0) {
-          endpoint = "/api/general-enquiry";
-          payload = {
-            full_name: general.name,
-            email: general.email,
-            mobile: general.mobile,
-            message: general.message,
-          };
-        }
-
-        // Distributor Enquiry
-        if (activeTab === 1) {
-          endpoint = "/api/distributor-enquiry";
-          payload = {
-            name: distributor.name,
-            firm_name: distributor.firmName,
-            address: distributor.address,
-            telephone: distributor.telephone,
-            mobile: distributor.mobile,
-            email: distributor.email,
-            type: distributor.type,
-            year_of_establishment: distributor.year,
-            turnover: distributor.turnover,
-            warehouse_area: distributor.warehouse,
-            comments: distributor.comments,
-          };
-        }
-
-        // Customer Feedback
-        if (activeTab === 2) {
-          endpoint = "/api/customer-feedback";
-          payload = {
-            name: feedback.name,
-            email: feedback.email,
-            mobile: feedback.mobile,
-            feedback: feedback.feedback,
-            rating: feedback.rating,
-          };
-        }
-
-        const res = await fetch(`${BACKEND_URL}${endpoint}`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-
-        if (!res.ok) {
-          throw new Error("Failed to submit form");
-        }
-
-        setIsSuccess(true);
-        setTouched({});
-      } catch (err) {
-        alert("Something went wrong. Please try again.");
-      } finally {
-        setIsSubmitting(false);
+      // General Enquiry
+      if (activeTab === 0) {
+        endpoint = "/api/general-enquiry";
+        payload = {
+          full_name: general.name,
+          email: general.email,
+          mobile: general.mobile,
+          message: general.message,
+        };
       }
-    };
 
+      // Distributor Enquiry
+      if (activeTab === 1) {
+        endpoint = "/api/distributor-enquiry";
+        payload = {
+          name: distributor.name,
+          firm_name: distributor.firmName,
+          address: distributor.address,
+          telephone: distributor.telephone,
+          mobile: distributor.mobile,
+          email: distributor.email,
+          type: distributor.type,
+          year_of_establishment: distributor.year,
+          turnover: distributor.turnover,
+          warehouse_area: distributor.warehouse,
+          comments: distributor.comments,
+        };
+      }
+
+      // Customer Feedback
+      if (activeTab === 2) {
+        endpoint = "/api/customer-feedback";
+        payload = {
+          name: feedback.name,
+          email: feedback.email,
+          mobile: feedback.mobile,
+          feedback: feedback.feedback,
+          rating: feedback.rating,
+        };
+      }
+
+      const res = await fetch(`${BACKEND_URL}${endpoint}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to submit form");
+      }
+
+      setIsSuccess(true);
+      setTouched({});
+    } catch (err) {
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
 
   return (
     <div className="pt-32 pb-40 min-h-screen bg-stone-50 relative overflow-hidden">
