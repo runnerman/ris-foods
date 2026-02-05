@@ -204,6 +204,7 @@ const ContactPage = () => {
       if (!isValidEmail(general.email)) errs.email = "Please enter a valid email";
       if (!isValidMobile(general.mobile)) errs.mobile = "Please enter a 10-digit mobile number";
       if (!general.message) errs.message = "Message is required";
+      else if (general.message.length < 5) errs.message = "Message must be at least 5 characters";
     } else if (activeTab === 1) {
       if (!distributor.name) errs.d_name = "Full Name is required";
       if (!distributor.firmName) errs.d_firm = "Firm Name is required";
