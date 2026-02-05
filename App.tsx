@@ -222,16 +222,79 @@ const ContactPage = () => {
   const canSubmit = Object.keys(errors).length === 0;
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!canSubmit) return;
-    setIsSubmitting(true);
-    await new Promise(r => setTimeout(r, 2000));
-    setIsSubmitting(false);
-    setIsSuccess(true);
-    setTimeout(() => {
-      setIsSuccess(false);
-      setTouched({});
-    }, 5000);
+    const BACKEND_URL =
+      "https://ris-foods-backend-itvnlc4hj-ashers-projects-abff786f.vercel.app";
+
+    const handleSubmit = async (e: React.FormEvent) => {
+      e.preventDefault();
+      if (!canSubmit) return;
+
+      setIsSubmitting(true);
+
+      try {
+        let endpoint = "";
+        let payload: any = {};
+
+        // General Enquiry
+        if (activeTab === 0) {
+          endpoint = "/api/general-enquiry";
+          payload = {
+            full_name: general.name,
+            email: general.email,
+            mobile: general.mobile,
+            message: general.message,
+          };
+        }
+
+        // Distributor Enquiry
+        if (activeTab === 1) {
+          endpoint = "/api/distributor-enquiry";
+          payload = {
+            name: distributor.name,
+            firm_name: distributor.firmName,
+            address: distributor.address,
+            telephone: distributor.telephone,
+            mobile: distributor.mobile,
+            email: distributor.email,
+            type: distributor.type,
+            year_of_establishment: distributor.year,
+            turnover: distributor.turnover,
+            warehouse_area: distributor.warehouse,
+            comments: distributor.comments,
+          };
+        }
+
+        // Customer Feedback
+        if (activeTab === 2) {
+          endpoint = "/api/customer-feedback";
+          payload = {
+            name: feedback.name,
+            email: feedback.email,
+            mobile: feedback.mobile,
+            feedback: feedback.feedback,
+            rating: feedback.rating,
+          };
+        }
+
+        const res = await fetch(`${BACKEND_URL}${endpoint}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        if (!res.ok) {
+          throw new Error("Failed to submit form");
+        }
+
+        setIsSuccess(true);
+        setTouched({});
+      } catch (err) {
+        alert("Something went wrong. Please try again.");
+      } finally {
+        setIsSubmitting(false);
+      }
+    };
+
   };
 
   return (
