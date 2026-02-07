@@ -31,10 +31,7 @@ const Hero: React.FC<HeroProps> = ({ onExplore }) => {
           transition={{ duration: 1 }}
           className="text-center lg:text-left"
         >
-          <div className="flex items-center gap-4 mb-8 justify-center lg:justify-start">
-            <div className="w-8 h-[1px] bg-emerald-500"></div>
-            <span className="text-emerald-500 text-[10px] font-black uppercase tracking-[0.5em]">Direct from Kuttanad</span>
-          </div>
+
 
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-white leading-[1.05] tracking-tight mb-8">
             Taste the <br />
