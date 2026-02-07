@@ -658,9 +658,9 @@ const Features = () => (
   <section className="py-24 bg-stone-50">
     <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-12">
       {[
-        { title: 'Direct Sourcing', icon: <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />, desc: 'We partner directly with farmers in Kuttanad to bring you the highest quality Matta grains.' },
-        { title: 'Stone Grinding', icon: <circle cx="12" cy="12" r="10" />, desc: 'Our facility uses slow-speed stone mills to ensure natural oils and nutrients are preserved.' },
-        { title: 'Zero Additives', icon: <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />, desc: 'RIS Foods products contain no bleaching agents or artificial preservatives. Purely natural.' }
+        { title: 'Direct Sourcing', icon: <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />, desc: 'We partner directly with farmers to bring you the highest quality grains.' },
+        { title: 'Hygienic Production', icon: <circle cx="12" cy="12" r="10" />, desc: 'Every batch goes through multi-level quality checks to ensure purity, consistency, and compliance with food safety standards.' },
+        { title: 'Zero Additives', icon: <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />, desc: 'RIS products contain no bleaching agents or artificial preservatives. Purely natural.' }
       ].map((f, i) => (
         <motion.div
           key={i}
@@ -700,7 +700,7 @@ const Testimonials = () => (
       </motion.h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
         {[
-          { text: "RIS Foods has brought the authentic taste of my mother's kitchen to my home in London.", author: "Dr. Lakshmi S" },
+          { text: "RIS has brought the authentic taste of my mother's kitchen to my home in London.", author: "Dr. Lakshmi S" },
           { text: "The texture of their roasted rice powder is unmatched. My Idiyappams are finally soft!", author: "Thomas K, Kottayam" },
           { text: "Cleanest breakfast products I've found in 20 years. Consistent quality every time.", author: "Ibrahim P, Kochi" }
         ].map((t, i) => (
