@@ -99,7 +99,7 @@ const ProductList: React.FC<ProductListProps> = ({ isFullPage = false, onNavigat
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
-            className="flex flex-wrap justify-center gap-8 md:gap-10 lg:gap-12"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 lg:gap-12 max-w-7xl mx-auto"
           >
             {PRODUCTS.map((product) => (
               <motion.div
@@ -107,7 +107,7 @@ const ProductList: React.FC<ProductListProps> = ({ isFullPage = false, onNavigat
                 variants={itemVariants}
                 onHoverStart={() => setHoveredId(product.id)}
                 onHoverEnd={() => setHoveredId(null)}
-                className="group relative bg-white rounded-[55px] p-7 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] hover:shadow-[0_30px_80px_-15px_rgba(5,150,105,0.15)] border border-stone-100 hover:border-emerald-200 transition-all duration-700 cursor-pointer overflow-hidden flex flex-col w-full sm:w-[calc(50%-1.25rem)] lg:w-[calc(33.33%-2.5rem)] max-w-[420px]"
+                className="group relative bg-white rounded-[40px] p-6 md:p-8 shadow-lg hover:shadow-xl border border-stone-100 hover:border-emerald-200 transition-all duration-500 cursor-pointer overflow-hidden flex flex-col w-full mx-auto max-w-[400px] sm:max-w-none"
                 onClick={() => {
                   if (onNavigate) {
                     onNavigate(AppSection.PRODUCTS);
@@ -376,7 +376,7 @@ const ProductList: React.FC<ProductListProps> = ({ isFullPage = false, onNavigat
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-100px" }}
-              className="flex flex-wrap justify-center gap-10 lg:gap-12 relative z-10"
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 lg:gap-12 relative z-10"
             >
               {PRODUCTS.filter(p => p.category === cat).map((product) => (
                 <motion.div
@@ -385,7 +385,7 @@ const ProductList: React.FC<ProductListProps> = ({ isFullPage = false, onNavigat
                   onClick={() => { setSelectedProduct(product); setCurrentImgIndex(0); }}
                   onHoverStart={() => setHoveredId(product.id)}
                   onHoverEnd={() => setHoveredId(null)}
-                  className="group cursor-pointer relative w-full max-w-[420px]"
+                  className="group cursor-pointer relative w-full max-w-[400px] sm:max-w-none mx-auto"
                 >
                   <div className="relative aspect-[3.5/5] rounded-[65px] overflow-hidden bg-white shadow-[0_25px_60px_rgba(0,0,0,0.08)] hover:shadow-[0_35px_80px_rgba(5,150,105,0.15)] transition-all duration-700 hover:-translate-y-6 border border-stone-200/80 hover:border-emerald-200 isolate">
                     {/* Product Image */}

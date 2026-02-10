@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ICONS } from '../constants.tsx';
 import { AppSection } from '../types.ts';
 
@@ -84,31 +85,39 @@ const Navbar: React.FC<NavbarProps> = ({ currentSection, onNavigate }) => {
       </div>
 
       {/* Mobile Menu Overlay */}
-      {isOpen && (
-        <div className="md:hidden bg-stone-950 border-b border-stone-800 shadow-2xl">
-          <div className="px-6 pt-4 pb-8 space-y-2">
-            {navItems.map((item) => (
-              <button
-                key={item.label}
-                onClick={() => {
-                  onNavigate(item.value);
-                  setIsOpen(false);
-                }}
-                className={`block w-full text-left px-4 py-4 text-[10px] font-bold uppercase tracking-widest ${currentSection === item.value
-                  ? 'text-emerald-500 bg-emerald-500/5'
-                  : 'text-stone-400'
-                  } rounded-2xl transition-all`}
-              >
-                {item.label}
-              </button>
-            ))}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="md:hidden bg-stone-950 border-b border-stone-800 shadow-2xl overflow-hidden"
+          >
+            <div className="px-6 pt-4 pb-8 space-y-2">
+              {navItems.map((item) => (
+                <button
+                  key={item.label}
+                  onClick={() => {
+                    onNavigate(item.value);
+                    setIsOpen(false);
+                  }}
+                  className={`block w-full text-left px-4 py-4 text-[10px] font-bold uppercase tracking-widest ${currentSection === item.value
+                    ? 'text-emerald-500 bg-emerald-500/5'
+                    : 'text-stone-400'
+                    } rounded-2xl transition-all`}
+                >
+                  {item.label}
+                </button>
+              ))}
 
-            <button className="w-full bg-emerald-600 text-white py-4 rounded-2xl text-[10px] font-bold uppercase tracking-widest mt-4">
-              Where to Buy
-            </button>
-          </div>
-        </div>
-      )}
+              <button className="w-full bg-emerald-600 text-white py-4 rounded-2xl text-[10px] font-bold uppercase tracking-widest mt-4">
+                Where to Buy
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 };

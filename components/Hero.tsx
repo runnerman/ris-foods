@@ -218,7 +218,7 @@ const Hero: React.FC<HeroProps> = ({ onExplore }) => {
               rotateY: 5,
               transition: { duration: 0.4, ease: "easeOut" }
             }}
-            className="relative w-full max-w-[380px] aspect-[1/1.7] bg-gradient-to-br from-stone-900 to-stone-950 rounded-[70px] p-7 shadow-[0_70px_120px_-40px_rgba(0,0,0,0.9)] border border-white/10 cursor-pointer overflow-hidden group"
+            className="relative w-full max-w-[340px] sm:max-w-[380px] aspect-[1/1.7] bg-gradient-to-br from-stone-900 to-stone-950 rounded-[50px] sm:rounded-[70px] p-5 sm:p-7 shadow-[0_70px_120px_-40px_rgba(0,0,0,0.9)] border border-white/10 cursor-pointer overflow-hidden group mx-auto"
             style={{ transformStyle: "preserve-3d" }}
           >
             {/* Card Shine Effect */}
