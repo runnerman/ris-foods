@@ -522,31 +522,33 @@ html {
 }
 
 .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
 
-    /* ===================================
+/* ===================================
    MOBILE ACCESSIBILITY (Touch Targets)
    =================================== */
 
-    @media (max-width: 768px) {
+@media (max-width: 768px) {
 
-        button,
-        a,
-        .clickable {
-            min-height: 44px;
-            min-width: 44px;
-            padding: 12px 24px;
-            /* Base padding for touch targets */
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Reset display for text links to avoid breaking layout */
-        p a,
-        span a {
-            display: inline;
-            padding: 0;
-            min-height: auto;
-            min-width: auto;
-        }
+    button,
+    a,
+    .clickable {
+        min-height: 44px;
+        min-width: 44px;
+        padding: 12px 24px;
+        /* Base padding for touch targets */
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
     }
+
+    /* Reset display for text links to avoid breaking layout */
+    p a,
+    span a {
+        display: inline;
+        padding: 0;
+        min-height: auto;
+        min-width: auto;
+    }
+}
