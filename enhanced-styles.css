@@ -1,0 +1,506 @@
+/* Enhanced Custom Styles for RIS Foods Website */
+
+/* ===================================
+   CUSTOM ANIMATIONS
+   =================================== */
+
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+@keyframes glow-pulse {
+
+    0%,
+    100% {
+        opacity: 0.4;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.8;
+        transform: scale(1.05);
+    }
+}
+
+@keyframes slide-in-bottom {
+    0% {
+        transform: translateY(100px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fade-in-scale {
+    0% {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Gradient Animation for Text */
+@keyframes gradient-shift {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* ===================================
+   UTILITY CLASSES
+   =================================== */
+
+.animate-shimmer {
+    background: linear-gradient(90deg,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, 0.2) 50%,
+            rgba(255, 255, 255, 0) 100%);
+    background-size: 1000px 100%;
+    animation: shimmer 3s infinite;
+}
+
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+.animate-glow-pulse {
+    animation: glow-pulse 4s ease-in-out infinite;
+}
+
+.animate-slide-in-bottom {
+    animation: slide-in-bottom 0.8s ease-out;
+}
+
+.animate-fade-in-scale {
+    animation: fade-in-scale 0.6s ease-out;
+}
+
+.text-gradient-animated {
+    background: linear-gradient(270deg,
+            #059669,
+            #10b981,
+            #34d399,
+            #10b981,
+            #059669);
+    background-size: 400% 400%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradient-shift 8s ease infinite;
+}
+
+/* ===================================
+   GLASS MORPHISM EFFECTS
+   =================================== */
+
+.glass-effect {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-effect-dark {
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ===================================
+   CUSTOM SHADOWS
+   =================================== */
+
+.shadow-emerald-glow {
+    box-shadow: 0 20px 60px -15px rgba(16, 185, 129, 0.3);
+}
+
+.shadow-emerald-glow-lg {
+    box-shadow: 0 30px 80px -15px rgba(16, 185, 129, 0.4);
+}
+
+.shadow-stone-soft {
+    box-shadow: 0 10px 40px -10px rgba(41, 37, 36, 0.1);
+}
+
+.shadow-inner-glow {
+    box-shadow: inset 0 2px 20px rgba(16, 185, 129, 0.1);
+}
+
+/* ===================================
+   GRADIENT BACKGROUNDS
+   =================================== */
+
+.bg-gradient-radial {
+    background: radial-gradient(circle, var(--tw-gradient-stops));
+}
+
+.bg-gradient-mesh {
+    background:
+        radial-gradient(at 27% 37%, rgba(16, 185, 129, 0.12) 0px, transparent 50%),
+        radial-gradient(at 97% 21%, rgba(251, 191, 36, 0.08) 0px, transparent 50%),
+        radial-gradient(at 52% 99%, rgba(16, 185, 129, 0.1) 0px, transparent 50%),
+        radial-gradient(at 10% 29%, rgba(251, 191, 36, 0.06) 0px, transparent 50%),
+        radial-gradient(at 97% 96%, rgba(16, 185, 129, 0.08) 0px, transparent 50%);
+}
+
+/* ===================================
+   CUSTOM SCROLLBAR
+   =================================== */
+
+.custom-scrollbar-thin::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+
+.custom-scrollbar-thin::-webkit-scrollbar-track {
+    background: #f5f5f4;
+    border-radius: 10px;
+}
+
+.custom-scrollbar-thin::-webkit-scrollbar-thumb {
+    background: #d6d3d1;
+    border-radius: 10px;
+    transition: background 0.3s ease;
+}
+
+.custom-scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: #10b981;
+}
+
+/* ===================================
+   HOVER EFFECTS
+   =================================== */
+
+.hover-lift {
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hover-lift:hover {
+    transform: translateY(-8px);
+}
+
+.hover-scale {
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hover-scale:hover {
+    transform: scale(1.05);
+}
+
+/* Card Shine Effect */
+.card-shine {
+    position: relative;
+    overflow: hidden;
+}
+
+.card-shine::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.1),
+            transparent);
+    transition: left 0.6s ease;
+    pointer-events: none;
+}
+
+.card-shine:hover::before {
+    left: 100%;
+}
+
+/* ===================================
+   TEXT EFFECTS
+   =================================== */
+
+.text-shadow-soft {
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.text-shadow-glow {
+    text-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+}
+
+/* ===================================
+   BORDER EFFECTS
+   =================================== */
+
+.border-gradient {
+    border: 2px solid;
+    border-image: linear-gradient(135deg, #10b981, #34d399) 1;
+}
+
+.border-gradient-animated {
+    position: relative;
+    border: 2px solid transparent;
+    background: linear-gradient(white, white) padding-box,
+        linear-gradient(135deg, #10b981, #34d399) border-box;
+}
+
+/* ===================================
+   LOADING STATES
+   =================================== */
+
+.skeleton {
+    background: linear-gradient(90deg,
+            #f5f5f4 0%,
+            #e7e5e4 50%,
+            #f5f5f4 100%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+/* ===================================
+   RESPONSIVE UTILITIES
+   =================================== */
+
+@media (max-width: 640px) {
+    .mobile-full-width {
+        width: 100vw;
+        margin-left: -1rem;
+        margin-right: -1rem;
+        border-radius: 0;
+    }
+}
+
+/* ===================================
+   FOCUS STATES (Accessibility)
+   =================================== */
+
+.focus-ring:focus-visible {
+    outline: 2px solid #10b981;
+    outline-offset: 2px;
+}
+
+/* ===================================
+   CUSTOM TRANSITIONS
+   =================================== */
+
+.transition-smooth {
+    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.transition-bounce {
+    transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* ===================================
+   BADGE STYLES
+   =================================== */
+
+.badge-premium {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3);
+}
+
+.badge-new {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+}
+
+/* ===================================
+   IMAGE EFFECTS
+   =================================== */
+
+.image-zoom {
+    overflow: hidden;
+}
+
+.image-zoom img {
+    transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.image-zoom:hover img {
+    transform: scale(1.1);
+}
+
+/* Grayscale to Color on Hover */
+.image-color-reveal img {
+    filter: grayscale(0.3);
+    transition: filter 0.6s ease;
+}
+
+.image-color-reveal:hover img {
+    filter: grayscale(0);
+}
+
+/* ===================================
+   GRID PATTERNS
+   =================================== */
+
+.grid-pattern {
+    background-image:
+        linear-gradient(rgba(120, 119, 198, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(120, 119, 198, 0.03) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+/* ===================================
+   NOISE TEXTURE
+   =================================== */
+
+.noise-texture {
+    position: relative;
+}
+
+.noise-texture::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' /%3E%3C/svg%3E");
+    pointer-events: none;
+}
+
+/* ===================================
+   PREMIUM CARD EFFECT
+   =================================== */
+
+.premium-card {
+    background: linear-gradient(145deg,
+            rgba(255, 255, 255, 0.9) 0%,
+            rgba(255, 255, 255, 0.7) 100%);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+/* ===================================
+   BUTTON STYLES
+   =================================== */
+
+/* Note: Converted from @apply to standard CSS for CDN compatibility */
+
+.btn-primary {
+    padding: 1rem 2rem;
+    background: linear-gradient(to right, #059669, #10b981);
+    color: white;
+    border-radius: 9999px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary:active {
+    transform: scale(0.95);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(to right, #10b981, #34d399);
+    box-shadow: 0 20px 60px -15px rgba(16, 185, 129, 0.3);
+    /* shadow-emerald-glow */
+}
+
+.btn-secondary {
+    padding: 1rem 2rem;
+    background-color: #1c1917;
+    color: white;
+    border-radius: 9999px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    transition: all 300ms;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-secondary:active {
+    transform: scale(0.95);
+}
+
+.btn-secondary:hover {
+    background-color: #059669;
+}
+
+.btn-ghost {
+    padding: 1rem 2rem;
+    background-color: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    border-radius: 9999px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: all 300ms;
+    cursor: pointer;
+}
+
+.btn-ghost:active {
+    transform: scale(0.95);
+}
+
+.btn-ghost:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* ===================================
+   UTILITY HELPERS
+   =================================== */
+
+.center-absolute {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.full-bleed {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+}
+
+/* Hide scrollbar but keep functionality */
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
