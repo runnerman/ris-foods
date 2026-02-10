@@ -267,7 +267,7 @@ const Hero: React.FC<HeroProps> = ({ onExplore }) => {
                       </p>
                     </div>
                     <div className="flex items-center gap-2 text-emerald-400">
-                      <span className="text-2xl font-bold">₹{PRODUCTS[0].price}</span>
+                      {/* Price removed */}
                     </div>
                   </div>
                 </div>

@@ -6,6 +6,7 @@ import Hero from './components/Hero';
 import ProductList from './components/ProductList';
 import AIAssistant from './components/AIAssistant';
 import Footer from './components/Footer';
+import LiquidEther from './components/LiquidEther';
 import { AppSection } from './types';
 
 // --- Reusable Form Components ---
@@ -336,6 +337,25 @@ const ContactPage = () => {
 
   return (
     <div className="pt-32 pb-40 min-h-screen bg-stone-50 relative overflow-hidden">
+      <div className="absolute inset-0 z-0 opacity-60">
+        <LiquidEther
+          colors={['#5227FF', '#FF9FFC', '#B19EEF']}
+          mouseForce={20}
+          cursorSize={100}
+          isViscous
+          viscous={30}
+          iterationsViscous={32}
+          iterationsPoisson={32}
+          resolution={0.5}
+          isBounce={false}
+          autoDemo
+          autoSpeed={0.5}
+          autoIntensity={2.2}
+          takeoverDuration={0.25}
+          autoResumeDelay={3000}
+          autoRampDuration={0.6}
+        />
+      </div>
       <div className="max-w-4xl mx-auto px-6 relative z-10">
         {/* Header with simple animations */}
         <div className="text-center mb-16">

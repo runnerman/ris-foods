@@ -203,14 +203,10 @@ const ProductList: React.FC<ProductListProps> = ({ isFullPage = false, onNavigat
                     </span>
                   </div>
 
-                  {/* Price Section */}
+                  {/* Price Section Removed */}
                   <div className="mt-auto w-full pt-8 border-t border-stone-100 group-hover:border-emerald-200 transition-colors">
                     <div className="flex flex-col items-center mb-6">
-                      <span className="text-[9px] text-stone-400 font-black uppercase tracking-[0.3em] mb-2">Standard Pack</span>
-                      <div className="flex items-baseline gap-1">
-                        <span className="text-emerald-600 font-serif text-2xl">₹</span>
-                        <span className="text-4xl font-black text-stone-900 tracking-tighter">{product.price}</span>
-                      </div>
+                      {/* Price was here */}
                     </div>
 
                     {/* CTA with Icon Animation */}
@@ -438,12 +434,7 @@ const ProductList: React.FC<ProductListProps> = ({ isFullPage = false, onNavigat
                         transition={{ duration: 0.5, delay: 0.2 }}
                       >
                         <div className="flex flex-col">
-                          <span className="text-[10px] text-emerald-300 font-bold uppercase tracking-[0.3em] mb-2">
-                            Price
-                          </span>
-                          <span className="text-4xl font-bold tracking-tighter text-white">
-                            ₹{product.price}
-                          </span>
+                          {/* Price removed */}
                         </div>
 
                         <motion.div
@@ -631,12 +622,7 @@ const ProductList: React.FC<ProductListProps> = ({ isFullPage = false, onNavigat
                   transition={{ delay: 0.7 }}
                 >
                   <div className="flex flex-col">
-                    <span className="text-[10px] font-bold text-stone-500 uppercase tracking-[0.3em] mb-2">
-                      Standard Pack
-                    </span>
-                    <span className="text-5xl md:text-6xl font-black text-stone-900 tracking-tighter">
-                      ₹{selectedProduct.price}
-                    </span>
+                    {/* Price removed */}
                   </div>
 
                   <motion.button
