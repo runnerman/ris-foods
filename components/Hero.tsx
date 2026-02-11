@@ -20,6 +20,7 @@ const Hero: React.FC<HeroProps> = ({ onExplore }) => {
           src="https://images.unsplash.com/photo-1585816561202-e98fe10d8025?q=80&w=2126&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           className="w-full h-full object-cover brightness-[0.4] saturate-[1.2]"
           alt="Kerala Heritage Background"
+          fetchPriority="high"
         />
         {/* Multi-layer Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-stone-950/85 via-stone-950/30 to-transparent"></div>

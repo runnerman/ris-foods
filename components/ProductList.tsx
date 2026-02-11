@@ -395,7 +395,7 @@ const ProductList: React.FC<ProductListProps> = ({ isFullPage = false, onNavigat
                     />
 
                     {/* Gradient Overlays */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-stone-900/95 via-stone-900/40 to-transparent z-20 transition-all duration-700 group-hover:from-emerald-900/95 group-hover:via-emerald-900/50"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-stone-900/95 via-stone-900/40 to-transparent z-20 transition-all duration-700 group-hover:from-black/95 group-hover:via-black/50"></div>
 
                     {/* Border Ring */}
                     <div className="absolute inset-0 ring-1 ring-inset ring-white/30 rounded-[65px] pointer-events-none z-30"></div>
@@ -414,7 +414,7 @@ const ProductList: React.FC<ProductListProps> = ({ isFullPage = false, onNavigat
                       />
 
                       <motion.h4
-                        className="text-3xl md:text-4xl font-serif font-bold mb-5 text-white group-hover:text-emerald-300 transition-colors duration-500"
+                        className="text-3xl md:text-4xl font-serif font-bold mb-5 text-emerald-400 transition-colors duration-500"
                         initial={{ opacity: 0, y: 20 }}
                         animate={hoveredId === product.id ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                         transition={{ duration: 0.5 }}

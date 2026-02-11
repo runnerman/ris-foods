@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ICONS } from '../constants.tsx';
 import { AppSection } from '../types.ts';
 
-import logoImg from './ris-logo.png';
+import logoImg from './ris-logo2.png';
 
 interface NavbarProps {
   currentSection: AppSection;

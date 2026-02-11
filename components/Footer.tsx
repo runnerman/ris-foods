@@ -11,8 +11,8 @@ const Footer: React.FC = () => {
 
           {/* Brand Section */}
           <div className="flex flex-col items-start">
-            {/* Logo (unchanged size & position) */}
-            <div className="h-28 md:h-20 w-auto -ml-1">
+            {/* Logo (reduced size) */}
+            <div className="h-24 md:h-20 w-auto -ml-1">
               <img
                 src={logoImg}
                 alt="RIS Logo"
@@ -20,10 +20,11 @@ const Footer: React.FC = () => {
               />
             </div>
 
-            {/* Description (optically aligned with logo) */}
-            <p className="mt-1 pl-7 text-stone-400 text-sm leading-relaxed max-w-sm font-light">
-              Crafting authentic Kerala breakfast experiences since 2020.
-              From our fields to your morning table.
+            {/* Description (aligned with logo) */}
+            <p className="mt-2 text-stone-400 text-sm leading-loose max-w-sm font-light">
+              From our fields to your morning table.<br />
+              Crafting authentic Kerala breakfast<br />
+              experiences since 2020.
             </p>
           </div>
 

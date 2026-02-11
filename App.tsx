@@ -7,6 +7,7 @@ import ProductList from './components/ProductList';
 import AIAssistant from './components/AIAssistant';
 import Footer from './components/Footer';
 import LiquidEther from './components/LiquidEther';
+import CountUp from './components/CountUp';
 import { AppSection } from './types';
 
 // --- Reusable Form Components ---
@@ -416,7 +417,7 @@ const ContactPage = () => {
                 <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
               </div>
               <h3 className="text-3xl font-serif font-bold text-stone-900 mb-4">Message Sent!</h3>
-              <p className="text-stone-500 font-light max-w-sm mx-auto">Thank you for contacting RIS Foods. Our team will review your enquiry and get back to you shortly.</p>
+              <p className="text-stone-500 font-light max-w-sm mx-auto">Thank you for contacting RIS. Our team will review your enquiry and get back to you shortly.</p>
               <button
                 onClick={() => setIsSuccess(false)}
                 className="mt-12 text-emerald-700 font-bold uppercase text-[10px] tracking-widest hover:underline"
@@ -716,7 +717,7 @@ const Testimonials = () => (
         transition={{ duration: 0.8, ease: "easeOut" }}
         className="text-4xl md:text-5xl font-serif font-bold mb-20"
       >
-        Trusted by 10,000+ Homes
+        Trusted by <CountUp to={10000} separator="," duration={2.5} className="inline" />+ Homes
       </motion.h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
         {[
