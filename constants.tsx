@@ -2,10 +2,15 @@
 import React from 'react';
 import { Product } from './types';
 import puttuPodiImg from './components/puttu-podi.jpg';
+import puttuPodiNutritionImg from './components/puttu-podi-nutrition.jpg';
 import roastedRavaImg from './components/roasted-rava.jpg';
+import roastedRavaNutritionImg from './components/roasted-rava-nutrition.jpg';
 import palappamImg from './components/palappam-mix.jpg';
+import palappamNutritionImg from './components/palappam-mix-nutrition.jpg';
 import ricePowderImg from './components/rice-powder.jpg';
+import ricePowderNutritionImg from './components/rice-powder-nutrition.jpg';
 import dosaBatterImg from './components/dosa-batter.jpg';
+import dosaBatterNutritionImg from './components/dosa-batter-nutrition.jpg';
 
 export const PRODUCTS: Product[] = [
   {
@@ -15,6 +20,7 @@ export const PRODUCTS: Product[] = [
     description: 'Traditionally steam-roasted for that perfect granular texture and authentic aroma.',
     price: 65,
     image: puttuPodiImg,
+    images: [puttuPodiImg, puttuPodiNutritionImg],
     benefits: ['Preservative Free', 'Steam Roasted', 'Traditional Taste']
   },
   {
@@ -24,6 +30,7 @@ export const PRODUCTS: Product[] = [
     description: 'Premium quality roasted semolina for soft, non-sticky Upma and Kesari.',
     price: 60,
     image: roastedRavaImg,
+    images: [roastedRavaImg, roastedRavaNutritionImg],
     benefits: ['Pre-roasted', 'Low Glycemic Index', 'Premium Wheat']
   },
   {
@@ -33,6 +40,7 @@ export const PRODUCTS: Product[] = [
     description: 'Create lacy, soft-centered palappams instantly with our signature rice-coconut blend.',
     price: 75,
     image: palappamImg,
+    images: [palappamImg, palappamNutritionImg],
     benefits: ['Zero Fermentation Wait', 'Naturally Sweet', 'Lacy Edges']
   },
   {
@@ -42,6 +50,7 @@ export const PRODUCTS: Product[] = [
     description: 'Freshly stone-ground and naturally fermented batter for restaurant-style breakfasts at home.',
     price: 90,
     image: dosaBatterImg,
+    images: [dosaBatterImg, dosaBatterNutritionImg],
     benefits: ['Naturally Fermented', 'Stone Ground', 'No Soda Added']
   },
   {
@@ -51,6 +60,7 @@ export const PRODUCTS: Product[] = [
     description: 'Multi-purpose rice flour, perfectly roasted for Idiyappam, Pathiri, and snacks.',
     price: 70,
     image: ricePowderImg,
+    images: [ricePowderImg, ricePowderNutritionImg],
     benefits: ['Double Roasted', 'Super Fine', '100% Pure Rice']
   }
 ];

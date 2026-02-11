@@ -304,29 +304,6 @@ const Hero: React.FC<HeroProps> = ({ onExplore }) => {
         </motion.div>
       </div>
 
-      {/* Scroll Indicator */}
-      <motion.div
-        className="absolute bottom-12 left-1/2 -translate-x-1/2 z-20"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.5, duration: 1 }}
-      >
-        <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="flex flex-col items-center gap-3 cursor-pointer group"
-          onClick={onExplore}
-        >
-          <span className="text-stone-400 text-xs uppercase tracking-widest group-hover:text-emerald-400 transition-colors">Scroll</span>
-          <div className="w-6 h-10 border-2 border-stone-500 group-hover:border-emerald-400 rounded-full flex items-start justify-center p-2 transition-colors">
-            <motion.div
-              className="w-1.5 h-1.5 bg-stone-500 group-hover:bg-emerald-400 rounded-full transition-colors"
-              animate={{ y: [0, 12, 0] }}
-              transition={{ duration: 2, repeat: Infinity }}
-            />
-          </div>
-        </motion.div>
-      </motion.div>
     </div>
   );
 };

@@ -1,4 +1,5 @@
 
+
 export interface Product {
   id: string;
   name: string;
@@ -6,6 +7,7 @@ export interface Product {
   description: string;
   price: number;
   image: string;
+  images?: string[]; // Optional array for multiple images (packet + nutrition facts)
   benefits: string[];
 }
 

@@ -14,11 +14,10 @@ const ProductList: React.FC<ProductListProps> = ({ isFullPage = false, onNavigat
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const categories = ['Rice', 'Wheat', 'Instant'];
 
-  const getProductImages = (img: string) => [
-    img,
-    "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&q=80&w=800",
-    "https://images.unsplash.com/photo-1606787366850-de6330128bfc?auto=format&fit=crop&q=80&w=800"
-  ];
+  const getProductImages = (product: Product) => {
+    // Use images array if available, otherwise fall back to single image
+    return product.images && product.images.length > 0 ? product.images : [product.image];
+  };
 
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -40,13 +39,13 @@ const ProductList: React.FC<ProductListProps> = ({ isFullPage = false, onNavigat
 
   const handleNextImg = () => {
     if (!selectedProduct) return;
-    const imgs = getProductImages(selectedProduct.image);
+    const imgs = getProductImages(selectedProduct);
     setCurrentImgIndex((prev) => (prev + 1) % imgs.length);
   };
 
   const handlePrevImg = () => {
     if (!selectedProduct) return;
-    const imgs = getProductImages(selectedProduct.image);
+    const imgs = getProductImages(selectedProduct);
     setCurrentImgIndex((prev) => (prev - 1 + imgs.length) % imgs.length);
   };
 
@@ -99,7 +98,7 @@ const ProductList: React.FC<ProductListProps> = ({ isFullPage = false, onNavigat
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 lg:gap-12 max-w-7xl mx-auto"
+            className="flex flex-wrap justify-center gap-8 md:gap-10 lg:gap-12 max-w-7xl mx-auto"
           >
             {PRODUCTS.map((product) => (
               <motion.div
@@ -107,7 +106,7 @@ const ProductList: React.FC<ProductListProps> = ({ isFullPage = false, onNavigat
                 variants={itemVariants}
                 onHoverStart={() => setHoveredId(product.id)}
                 onHoverEnd={() => setHoveredId(null)}
-                className="group relative bg-white rounded-[40px] p-6 md:p-8 shadow-lg hover:shadow-xl border border-stone-100 hover:border-emerald-200 transition-all duration-500 cursor-pointer overflow-hidden flex flex-col w-full mx-auto max-w-[400px] sm:max-w-none"
+                className="group relative bg-white rounded-[40px] p-6 md:p-8 shadow-lg hover:shadow-xl border border-stone-100 hover:border-emerald-200 transition-all duration-500 cursor-pointer overflow-hidden flex flex-col w-full sm:w-[calc(50%-1.25rem)] lg:w-[calc(33.33%-2rem)] max-w-[400px]"
                 onClick={() => {
                   if (onNavigate) {
                     onNavigate(AppSection.PRODUCTS);
@@ -372,7 +371,7 @@ const ProductList: React.FC<ProductListProps> = ({ isFullPage = false, onNavigat
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-100px" }}
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 lg:gap-12 relative z-10"
+              className="flex flex-wrap justify-center gap-8 md:gap-10 lg:gap-12 relative z-10"
             >
               {PRODUCTS.filter(p => p.category === cat).map((product) => (
                 <motion.div
@@ -381,7 +380,7 @@ const ProductList: React.FC<ProductListProps> = ({ isFullPage = false, onNavigat
                   onClick={() => { setSelectedProduct(product); setCurrentImgIndex(0); }}
                   onHoverStart={() => setHoveredId(product.id)}
                   onHoverEnd={() => setHoveredId(null)}
-                  className="group cursor-pointer relative w-full max-w-[400px] sm:max-w-none mx-auto"
+                  className="group cursor-pointer relative w-full sm:w-[calc(50%-1.25rem)] lg:w-[calc(33.33%-2rem)] max-w-[400px]"
                 >
                   <div className="relative aspect-[3.5/5] rounded-[65px] overflow-hidden bg-white shadow-[0_25px_60px_rgba(0,0,0,0.08)] hover:shadow-[0_35px_80px_rgba(5,150,105,0.15)] transition-all duration-700 hover:-translate-y-6 border border-stone-200/80 hover:border-emerald-200 isolate">
                     {/* Product Image */}
@@ -414,9 +413,14 @@ const ProductList: React.FC<ProductListProps> = ({ isFullPage = false, onNavigat
                         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                       />
 
-                      <h4 className="text-3xl md:text-4xl font-serif font-bold mb-5 text-white group-hover:text-emerald-300 transition-colors duration-500">
+                      <motion.h4
+                        className="text-3xl md:text-4xl font-serif font-bold mb-5 text-white group-hover:text-emerald-300 transition-colors duration-500"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={hoveredId === product.id ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                        transition={{ duration: 0.5 }}
+                      >
                         {product.name}
-                      </h4>
+                      </motion.h4>
 
                       <motion.p
                         className="text-sm md:text-base text-stone-300 font-light leading-relaxed mb-10"
@@ -506,48 +510,52 @@ const ProductList: React.FC<ProductListProps> = ({ isFullPage = false, onNavigat
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.95 }}
                     transition={{ duration: 0.5 }}
-                    src={getProductImages(selectedProduct.image)[currentImgIndex]}
-                    className="w-full h-full object-cover"
+                    src={getProductImages(selectedProduct)[currentImgIndex]}
+                    className="w-full h-full object-contain"
                     alt={selectedProduct.name}
                   />
                 </AnimatePresence>
 
                 {/* Navigation Arrows */}
-                <div className="absolute inset-0 flex items-center justify-between px-6 md:px-10 opacity-0 group-hover/slider:opacity-100 transition-opacity duration-300">
-                  <motion.button
-                    onClick={handlePrevImg}
-                    className="p-4 md:p-5 bg-white/30 hover:bg-white/50 backdrop-blur-2xl rounded-full text-white transition-all shadow-xl"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="m15 18-6-6 6-6" />
-                    </svg>
-                  </motion.button>
+                {getProductImages(selectedProduct).length > 1 && (
+                  <div className="absolute inset-0 flex items-center justify-between px-6 md:px-10 opacity-0 group-hover/slider:opacity-100 transition-opacity duration-300">
+                    <motion.button
+                      onClick={handlePrevImg}
+                      className="p-4 md:p-5 bg-white/30 hover:bg-white/50 backdrop-blur-2xl rounded-full text-white transition-all shadow-xl"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="m15 18-6-6 6-6" />
+                      </svg>
+                    </motion.button>
 
-                  <motion.button
-                    onClick={handleNextImg}
-                    className="p-4 md:p-5 bg-white/30 hover:bg-white/50 backdrop-blur-2xl rounded-full text-white transition-all shadow-xl"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="m9 18 6-6-6-6" />
-                    </svg>
-                  </motion.button>
-                </div>
+                    <motion.button
+                      onClick={handleNextImg}
+                      className="p-4 md:p-5 bg-white/30 hover:bg-white/50 backdrop-blur-2xl rounded-full text-white transition-all shadow-xl"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="m9 18 6-6-6-6" />
+                      </svg>
+                    </motion.button>
+                  </div>
+                )}
 
                 {/* Image Indicators */}
-                <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3 z-20">
-                  {getProductImages(selectedProduct.image).map((_, i) => (
-                    <motion.button
-                      key={i}
-                      onClick={() => setCurrentImgIndex(i)}
-                      className={`h-2 rounded-full transition-all duration-500 ${i === currentImgIndex ? 'w-12 bg-emerald-500' : 'w-2 bg-white/50 hover:bg-white/70'}`}
-                      whileHover={{ scale: 1.2 }}
-                    />
-                  ))}
-                </div>
+                {getProductImages(selectedProduct).length > 1 && (
+                  <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3 z-20">
+                    {getProductImages(selectedProduct).map((_, i) => (
+                      <motion.button
+                        key={i}
+                        onClick={() => setCurrentImgIndex(i)}
+                        className={`h-2 rounded-full transition-all duration-500 ${i === currentImgIndex ? 'w-12 bg-emerald-500' : 'w-2 bg-white/50 hover:bg-white/70'}`}
+                        whileHover={{ scale: 1.2 }}
+                      />
+                    ))}
+                  </div>
+                )}
               </div>
 
               {/* Content Section */}
