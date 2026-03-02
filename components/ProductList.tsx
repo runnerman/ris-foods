@@ -562,10 +562,10 @@ const ProductList: React.FC<ProductListProps> = ({ isFullPage = false, onNavigat
                   {getProductImages(selectedProduct).length > 1 && (
                     <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3 z-20">
                       {getProductImages(selectedProduct).map((_, i) => (
-                        <motion.button
+                        <motion.div
                           key={i}
                           onClick={() => setCurrentImgIndex(i)}
-                          className={`h-1.5 lg:h-2 rounded-full transition-all duration-500 shadow-sm ${i === currentImgIndex ? 'w-8 lg:w-12 bg-emerald-500' : 'w-1.5 lg:w-2 bg-white/50 hover:bg-white/70'}`}
+                          className={`rounded-full transition-all duration-500 shadow-sm cursor-pointer border border-transparent flex-shrink-0 min-h-0 ${i === currentImgIndex ? 'w-10 lg:w-12 h-1.5 lg:h-2 bg-emerald-500' : 'w-1.5 lg:w-2 h-1.5 lg:h-2 bg-white/50 hover:bg-white/70'}`}
                           whileHover={{ scale: 1.2 }}
                         />
                       ))}
