@@ -366,7 +366,7 @@ const ContactPage = () => {
             transition={{ duration: 0.6 }}
             className="text-emerald-800 font-bold text-xs uppercase tracking-[0.8em] mb-6 block"
           >
-            SINCE 2020
+            SINCE 2022
           </motion.span>
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
@@ -664,7 +664,7 @@ const ContactPage = () => {
             </div>
             <div>
               <span className="text-[10px] uppercase font-bold text-stone-400 tracking-[0.2em] block mb-1">Email Desk</span>
-              <p className="text-stone-900 font-bold text-lg tracking-tight whitespace-nowrap overflow-hidden text-ellipsis">
+              <p className="text-stone-900 font-bold text-base md:text-lg tracking-tight break-all md:whitespace-nowrap md:overflow-hidden md:text-ellipsis">
                 ris.emmanuelfoodproducts@gmail.com
               </p>
             </div>
@@ -721,8 +721,8 @@ const Testimonials = () => (
       </motion.h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
         {[
-          { text: "RIS has brought the authentic taste of my mother's kitchen to my home in London.", author: "Dr. Lakshmi S" },
-          { text: "The texture of their roasted rice powder is unmatched. My Idiyappams are finally soft!", author: "Thomas K, Kottayam" },
+          { text: "RIS has brought the authentic taste of my mother's kitchen to my home in London.", author: "George" },
+          { text: "The texture of their roasted rice powder is unmatched. My Idiyappams are finally soft!", author: "Anil , Kottayam" },
           { text: "Cleanest breakfast products I've found in 20 years. Consistent quality every time.", author: "Ibrahim P, Kochi" }
         ].map((t, i) => (
           <motion.div

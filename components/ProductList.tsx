@@ -382,23 +382,33 @@ const ProductList: React.FC<ProductListProps> = ({ isFullPage = false, onNavigat
                   onHoverEnd={() => setHoveredId(null)}
                   className="group cursor-pointer relative w-full sm:w-[calc(50%-1.25rem)] lg:w-[calc(33.33%-2rem)] max-w-[400px]"
                 >
-                  <div className="relative aspect-[3.5/5] rounded-[65px] overflow-hidden bg-white shadow-[0_25px_60px_rgba(0,0,0,0.08)] hover:shadow-[0_35px_80px_rgba(5,150,105,0.15)] transition-all duration-700 hover:-translate-y-6 border border-stone-200/80 hover:border-emerald-200 isolate">
+                  <div className="relative aspect-[3.5/5] rounded-[65px] overflow-hidden bg-white shadow-[0_15px_40px_rgba(0,0,0,0.06)] active:shadow-[0_10px_20px_rgba(0,0,0,0.04)] lg:hover:shadow-[0_35px_80px_rgba(5,150,105,0.15)] transition-all duration-300 active:scale-[0.98] lg:hover:-translate-y-6 lg:border lg:border-stone-200/80 lg:hover:border-emerald-200 isolate">
                     {/* Product Image */}
                     <div className="absolute inset-0 bg-gradient-to-br from-stone-50 to-stone-100 transition-colors duration-700 group-hover:from-emerald-50/30 group-hover:to-stone-50"></div>
 
                     <motion.img
                       src={product.image}
                       alt={product.name}
-                      className="w-full h-full object-cover relative z-10"
-                      whileHover={{ scale: 1.08 }}
-                      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                      className="w-full h-full object-cover relative z-10 drop-shadow-[0_10px_15px_rgba(0,0,0,0.05)]"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 1.03 }}
+                      transition={{ duration: 0.2, ease: "easeOut" }}
                     />
 
                     {/* Gradient Overlays */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-stone-900/95 via-stone-900/40 to-transparent z-20 transition-all duration-700 group-hover:from-black/95 group-hover:via-black/50"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-stone-900/95 via-stone-900/40 to-transparent z-20 transition-all duration-700 lg:group-hover:from-black/95 lg:group-hover:via-black/50"></div>
 
                     {/* Border Ring */}
                     <div className="absolute inset-0 ring-1 ring-inset ring-white/30 rounded-[65px] pointer-events-none z-30"></div>
+
+                    {/* Mobile Tap Indicator */}
+                    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-50 lg:hidden bg-white/20 backdrop-blur-md text-white px-5 py-2.5 rounded-full text-[10px] uppercase font-bold tracking-widest shadow-lg flex items-center justify-center gap-2 border border-white/20 pointer-events-none">
+                      <span className="whitespace-nowrap">Explore Product</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="animate-pulse opacity-80">
+                        <path d="M5 12h14" />
+                        <path d="m12 5 7 7-7 7" />
+                      </svg>
+                    </div>
 
                     {/* Hover Content */}
                     <motion.div
@@ -502,60 +512,66 @@ const ProductList: React.FC<ProductListProps> = ({ isFullPage = false, onNavigat
               </motion.button>
 
               {/* Image Gallery Section */}
-              <div className="w-full lg:w-1/2 relative bg-gradient-to-br from-stone-100 to-stone-200 h-[45vh] lg:h-full group/slider overflow-hidden">
-                <AnimatePresence mode="wait">
-                  <motion.img
-                    key={currentImgIndex}
-                    initial={{ opacity: 0, scale: 1.1 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ duration: 0.5 }}
-                    src={getProductImages(selectedProduct)[currentImgIndex]}
-                    className="w-full h-full object-contain"
-                    alt={selectedProduct.name}
-                  />
-                </AnimatePresence>
+              <div className="w-full lg:w-1/2 relative bg-gradient-to-br from-stone-100 to-stone-200 h-[45vh] lg:h-full group/slider overflow-hidden flex flex-col pt-4 lg:pt-0">
 
-                {/* Navigation Arrows */}
-                {getProductImages(selectedProduct).length > 1 && (
-                  <div className="absolute inset-0 flex items-center justify-between px-6 md:px-10 opacity-0 group-hover/slider:opacity-100 transition-opacity duration-300">
-                    <motion.button
-                      onClick={handlePrevImg}
-                      className="p-4 md:p-5 bg-white/30 hover:bg-white/50 backdrop-blur-2xl rounded-full text-white transition-all shadow-xl"
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="m15 18-6-6 6-6" />
-                      </svg>
-                    </motion.button>
+                {/* Mobile Drag Indicator */}
+                <div className="w-12 h-1.5 bg-stone-300/60 rounded-full mx-auto mb-2 lg:hidden"></div>
 
-                    <motion.button
-                      onClick={handleNextImg}
-                      className="p-4 md:p-5 bg-white/30 hover:bg-white/50 backdrop-blur-2xl rounded-full text-white transition-all shadow-xl"
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="m9 18 6-6-6-6" />
-                      </svg>
-                    </motion.button>
-                  </div>
-                )}
+                <div className="flex-grow relative w-full h-full">
+                  <AnimatePresence mode="wait">
+                    <motion.img
+                      key={currentImgIndex}
+                      initial={{ opacity: 0, scale: 1.1 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      transition={{ duration: 0.5 }}
+                      src={getProductImages(selectedProduct)[currentImgIndex]}
+                      className="absolute inset-0 w-full h-full object-contain"
+                      alt={selectedProduct.name}
+                    />
+                  </AnimatePresence>
 
-                {/* Image Indicators */}
-                {getProductImages(selectedProduct).length > 1 && (
-                  <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3 z-20">
-                    {getProductImages(selectedProduct).map((_, i) => (
+                  {/* Navigation Arrows */}
+                  {getProductImages(selectedProduct).length > 1 && (
+                    <div className="absolute inset-0 flex items-center justify-between px-6 md:px-10 opacity-0 group-hover/slider:opacity-100 transition-opacity duration-300">
                       <motion.button
-                        key={i}
-                        onClick={() => setCurrentImgIndex(i)}
-                        className={`h-2 rounded-full transition-all duration-500 ${i === currentImgIndex ? 'w-12 bg-emerald-500' : 'w-2 bg-white/50 hover:bg-white/70'}`}
-                        whileHover={{ scale: 1.2 }}
-                      />
-                    ))}
-                  </div>
-                )}
+                        onClick={handlePrevImg}
+                        className="p-4 md:p-5 bg-stone-900/40 hover:bg-stone-900/60 backdrop-blur-xl border border-white/20 rounded-full text-white transition-all shadow-[0_8px_30px_rgb(0,0,0,0.12)] ml-2"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="m15 18-6-6 6-6" />
+                        </svg>
+                      </motion.button>
+
+                      <motion.button
+                        onClick={handleNextImg}
+                        className="p-4 md:p-5 bg-stone-900/40 hover:bg-stone-900/60 backdrop-blur-xl border border-white/20 rounded-full text-white transition-all shadow-[0_8px_30px_rgb(0,0,0,0.12)] mr-2"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="m9 18 6-6-6-6" />
+                        </svg>
+                      </motion.button>
+                    </div>
+                  )}
+
+                  {/* Image Indicators */}
+                  {getProductImages(selectedProduct).length > 1 && (
+                    <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3 z-20">
+                      {getProductImages(selectedProduct).map((_, i) => (
+                        <motion.button
+                          key={i}
+                          onClick={() => setCurrentImgIndex(i)}
+                          className={`h-1.5 lg:h-2 rounded-full transition-all duration-500 shadow-sm ${i === currentImgIndex ? 'w-8 lg:w-12 bg-emerald-500' : 'w-1.5 lg:w-2 bg-white/50 hover:bg-white/70'}`}
+                          whileHover={{ scale: 1.2 }}
+                        />
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
 
               {/* Content Section */}

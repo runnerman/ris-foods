@@ -21,10 +21,9 @@ const Footer: React.FC = () => {
             </div>
 
             {/* Description (aligned with logo) */}
-            <p className="mt-2 text-stone-400 text-sm leading-loose max-w-sm font-light">
-              From our fields to your morning table.<br />
-              Crafting authentic Kerala breakfast<br />
-              experiences since 2020.
+            <p className="text-stone-400 font-light mt-6 max-w-xs leading-relaxed">
+              Crafting premium, authentic Kerala breakfast
+              experiences since 2022.
             </p>
           </div>
 
@@ -37,7 +36,17 @@ const Footer: React.FC = () => {
               <li>VI/61, Mankidiyil Ris Gardens</li>
               <li>Hospital, Jn, Piravom</li>
               <li>Kerala, India 686664</li>
-              <li className="text-stone-400">+91 90723 36333</li>
+              <li className="flex items-center justify-end mt-5">
+                <a
+                  href="https://wa.me/919072336333"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2.5 text-stone-300 hover:text-white transition-colors group px-3 py-1.5 rounded-full hover:bg-stone-900 border border-transparent hover:border-stone-800"
+                >
+                  <img src="/whatsapp-icon.svg" alt="WhatsApp" className="w-6 h-6 object-contain drop-shadow-md group-hover:scale-110 transition-transform duration-300" />
+                  <span className="text-[11px] font-bold tracking-[0.2em] uppercase mt-0.5">WhatsApp Us</span>
+                </a>
+              </li>
             </ul>
           </div>
         </div>
@@ -45,7 +54,7 @@ const Footer: React.FC = () => {
         {/* Bottom Bar */}
         <div className="mt-16 md:mt-20 pt-6 border-t border-stone-900 flex flex-col md:flex-row justify-between items-center gap-4 md:gap-8">
           <div className="text-[10px] text-stone-600 uppercase tracking-[0.3em] font-bold">
-            © 2020 Emmanuel Food Products
+            © 2022 Emmanuel Food Products
           </div>
         </div>
       </div>

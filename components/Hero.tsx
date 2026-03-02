@@ -77,7 +77,7 @@ const Hero: React.FC<HeroProps> = ({ onExplore }) => {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
             </span>
-            <span className="text-emerald-400 text-xs font-bold uppercase tracking-[0.2em]">Since 2020</span>
+            <span className="text-emerald-400 text-xs font-bold uppercase tracking-[0.2em]">Since 2022</span>
           </motion.div>
 
           {/* Main Headline with Stagger Animation */}
